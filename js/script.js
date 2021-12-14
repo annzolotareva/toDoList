@@ -8,7 +8,6 @@ const toDoData = [];
 const render = function () {
   todoList.innerHTML = "";
   todoCompleted.innerHTML = "";
-
   toDoData.forEach(function (item, index) {
     const li = document.createElement("li");
     li.classList.add("todo-item");
@@ -39,7 +38,6 @@ const render = function () {
     });
   });
 };
-
 todoControl.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -48,8 +46,13 @@ todoControl.addEventListener("submit", function (event) {
     completed: false,
   };
 
-  toDoData.push(newToDo);
-  headerInput.value = "";
-
-  render();
+  let isError = false;
+  if (headerInput.value.trim() === "") {
+    isError = true;
+  }
+  if (!isError) {
+    toDoData.push(newToDo);
+    headerInput.value = "";
+    render();
+  }
 });
