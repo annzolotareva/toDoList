@@ -8,21 +8,33 @@ const toDoData = [];
 const render = function () {
   todoList.innerHTML = "";
   todoCompleted.innerHTML = "";
-  toDoData.forEach(function (item) {
+
+  toDoData.forEach(function (item, index) {
     const li = document.createElement("li");
     li.classList.add("todo-item");
 
-    li.innerHTML = '<span class="text-todo">' + item.text + "</span>" + '<div class="todo-buttons">' + '<button class="todo-remove"></button>' + _;
-    '<button class="todo-complete"></button>' + "</div>";
+    li.innerHTML =
+      '<span class="text-todo">' +
+      item.text +
+      "</span>" +
+      '<div class="todo-buttons">' +
+      '<button class="todo-remove"></button>' +
+      '<button class="todo-complete"></button>' +
+      "</div>";
 
     if (item.completed) {
-      todoCompleted.append("li");
+      todoCompleted.append(li);
     } else {
-      todoList.append("li");
+      todoList.append(li);
     }
 
-    li.querySelector(".todo-completed").addEventListener("click", function () {
+    li.querySelector(".todo-complete").addEventListener("click", function () {
       item.completed = !item.completed;
+      render();
+    });
+
+    li.querySelector(".todo-remove").addEventListener("click", function () {
+      toDoData.splice(index, 1);
       render();
     });
   });
