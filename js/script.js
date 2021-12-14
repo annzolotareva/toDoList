@@ -3,7 +3,7 @@ const headerInput = document.querySelector(".header-input");
 const todoList = document.querySelector(".todo-list");
 const todoCompleted = document.querySelector(".todo-completed");
 
-const toDoData = [];
+let toDoData = [];
 
 const render = function () {
   todoList.innerHTML = "";
@@ -37,7 +37,15 @@ const render = function () {
       render();
     });
   });
+
+  localStorage.setItem("toDoData", JSON.stringify(toDoData));
 };
+
+if (localStorage.toDoData) {
+  toDoData = JSON.parse(localStorage.toDoData);
+  render();
+}
+
 todoControl.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -46,13 +54,19 @@ todoControl.addEventListener("submit", function (event) {
     completed: false,
   };
 
-  let isError = false;
-  if (headerInput.value.trim() === "") {
-    isError = true;
-  }
-  if (!isError) {
-    toDoData.push(newToDo);
-    headerInput.value = "";
-    render();
-  }
+  const checkValue = function () {
+    let isError = false;
+
+    if (headerInput.value.trim() === "") {
+      isError = true;
+      alert("Заполни поле!");
+    }
+    if (!isError) {
+      toDoData.push(newToDo);
+      headerInput.value = "";
+      render();
+    }
+  };
+
+  checkValue();
 });
