@@ -49,22 +49,18 @@ if (localStorage.toDoData) {
 todoControl.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const newToDo = {
-    text: headerInput.value,
-    completed: false,
-  };
-
   const checkValue = function () {
-    let isError = false;
+    if (headerInput.value.trim() !== "") {
+      const newToDo = {
+        text: headerInput.value,
+        completed: false,
+      };
 
-    if (headerInput.value.trim() === "") {
-      isError = true;
-      alert("Заполни поле!");
-    }
-    if (!isError) {
       toDoData.push(newToDo);
       headerInput.value = "";
       render();
+    } else {
+      alert("Заполни поле!");
     }
   };
 
